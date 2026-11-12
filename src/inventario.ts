@@ -7,16 +7,16 @@ export class Inventario {
     this.productos.push(producto);
   }
 
-  buscar(id: number): Producto | undefined {
-    return this.productos.find((p) => p.id === id);
+  buscar(codigo: string): Producto | undefined {
+    return this.productos.find((p) => p.getCodigo() === codigo);
   }
 
-  actualizarCantidad(id: number, cantidad: number): void {
-    const producto = this.buscar(id);
+  actualizarExistencia(codigo: string, existencia: number): void {
+    const producto = this.buscar(codigo);
     if (!producto) {
-      throw new Error(`Producto ${id} no encontrado`);
+      throw new Error(`Producto ${codigo} no encontrado`);
     }
-    producto.cantidad = cantidad;
+    producto.setExistencia(existencia);
   }
 
   listar(): Producto[] {
@@ -24,6 +24,6 @@ export class Inventario {
   }
 
   valorTotal(): number {
-    return this.productos.reduce((total, p) => total + p.cantidad * p.precio, 0);
+    return this.productos.reduce((total, p) => total + p.getExistencia() * p.getPrecio(), 0);
   }
 }
