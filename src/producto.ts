@@ -27,7 +27,7 @@ export class Producto {
   }
 
   mostrarPrecio(): string {
-    return `$${this.precio}`;
+    return `$${this.precio * 10}`;
   }
 
   mostrarInformacion(): string {
