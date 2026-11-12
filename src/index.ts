@@ -1,9 +1,12 @@
 import { Inventario } from "./inventario";
+import { Producto } from "./producto";
 
 const inventario = new Inventario();
-inventario.agregar({ id: 1, nombre: "Teclado", cantidad: 10, precio: 350 });
-inventario.agregar({ id: 2, nombre: "Mouse", cantidad: 25, precio: 150 });
-inventario.actualizarCantidad(1, 8);
+inventario.agregar(new Producto("P001", "Teclado", 350, 10));
+inventario.agregar(new Producto("P002", "Mouse", 180, 5));
 
-console.log("Productos:", inventario.listar());
+for (const producto of inventario.listar()) {
+  console.log(producto.mostrarInformacion());
+  console.log("---");
+}
 console.log("Valor total del inventario: $" + inventario.valorTotal());
