@@ -6,4 +6,4 @@ inventario.agregar({ id: 2, nombre: "Mouse", cantidad: 25, precio: 150 });
 inventario.actualizarCantidad(1, 8);
 
 console.log("Productos:", inventario.listar());
-console.log("Valor total del inventario: $" + inventario.valorTotal());
+console.log("Valor total del inventario: $" + inventario.valorTotal(;
