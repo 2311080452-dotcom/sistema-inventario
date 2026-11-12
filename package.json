@@ -1,0 +1,14 @@
+{
+  "name": "sistema-inventario",
+  "version": "1.0.0",
+  "description": "Sistema de inventarios",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
