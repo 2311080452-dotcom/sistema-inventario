@@ -11,7 +11,7 @@ export class Producto {
   }
 
   getNombre(): string {
-    return this.nombre.toUpperCase();
+    return this.nombre;
   }
 
   getPrecio(): number {
