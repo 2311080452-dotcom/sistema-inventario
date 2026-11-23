@@ -2,6 +2,12 @@
 
 Todas las versiones del Sistema de Inventario se identifican con el esquema `vMAYOR.MENOR.PARCHE`.
 
+## v1.1.0 - 2026-11-23
+
+- Nueva configuración obligatoria: nombre del almacén mediante la variable de entorno `INVENTARIO_ALMACEN`.
+- El programa muestra la versión y el almacén al iniciar, y consulta un producto por su código.
+- Pruebas CP08 y CP09 para la configuración (9 de 9 pruebas correctas).
+
 ## v1.0.2 - 2026-11-23
 
 - Corrección del error en `getNombre()` detectado durante las pruebas (devolvía el nombre en mayúsculas).
