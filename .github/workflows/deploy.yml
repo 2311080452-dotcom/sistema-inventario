@@ -38,6 +38,9 @@ jobs:
         run: |
           for s in DEPLOY_HOST DEPLOY_USER DEPLOY_PORT DEPLOY_KEY; do
             if [ -z "${!s}" ]; then echo "::error::Falta configurar el secreto $s"; exit 1; fi
+            if [ "$s" != "DEPLOY_KEY" ] && [[ "${!s}" =~ [[:space:]] ]]; then
+              echo "::error::El secreto $s contiene espacios o tabuladores"; exit 1
+            fi
           done
           install -m 600 /dev/null /tmp/llave
           printf '%s\n' "$DEPLOY_KEY" > /tmp/llave
