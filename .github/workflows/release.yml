@@ -1,0 +1,47 @@
+name: Liberacion del Sistema de Inventario
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  liberar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Construir el proyecto
+        run: npm run build
+
+      - name: Crear paquete
+        run: |
+          mkdir paquete
+          cp -r dist package.json README.md paquete/
+          if [ -f CHANGELOG.md ]; then cp CHANGELOG.md paquete/; fi
+          cd paquete
+          zip -r ../sistema-inventario-${GITHUB_REF_NAME}.zip .
+
+      - name: Publicar version
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }} - Sistema de Inventario
+          files: sistema-inventario-${{ github.ref_name }}.zip
+          generate_release_notes: true
