@@ -36,6 +36,9 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
+          for s in DEPLOY_HOST DEPLOY_USER DEPLOY_PORT DEPLOY_KEY; do
+            if [ -z "${!s}" ]; then echo "::error::Falta configurar el secreto $s"; exit 1; fi
+          done
           install -m 600 /dev/null /tmp/llave
           printf '%s\n' "$DEPLOY_KEY" > /tmp/llave
           ssh-keygen -y -f /tmp/llave > /tmp/llave.pub
@@ -62,6 +65,8 @@ jobs:
             ssh-keyscan -p "$DEPLOY_PORT" "$DEPLOY_HOST" > ~/.ssh/known_hosts 2>/dev/null && [ -s ~/.ssh/known_hosts ] && break
             sleep 2
           done
+          if [ ! -s ~/.ssh/known_hosts ]; then echo "::error::No se pudo conectar a $DEPLOY_HOST:$DEPLOY_PORT"; exit 1; fi
+          echo "Conexión SSH disponible en $DEPLOY_HOST:$DEPLOY_PORT"
           echo "SSH=ssh -i $HOME/.ssh/deploy_key -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_HOST" >> "$GITHUB_ENV"
           echo "SCP=scp -i $HOME/.ssh/deploy_key -P $DEPLOY_PORT" >> "$GITHUB_ENV"
 
